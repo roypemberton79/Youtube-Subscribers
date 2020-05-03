@@ -1,0 +1,63 @@
+public interface Subject {
+public void registerObserver(Observer observer);
+public void removeObserver(Observer observer);
+public void notifyObserver();
+}
+
+import java.util.ArrayList;
+
+public class Channel implements Subject{
+private ArrayList<Observer> observers = new ArrayList<Observer>();
+private String ChannelName;
+private String status = 
+
+public Channel(String channelName) {
+ChannelName = channelName;
+}
+
+public String getStatus() {
+return status;
+}
+
+public void setStatus(String status) {
+this.status = status;
+notifyObserver();
+}
+
+@Override
+public void registerObserver(Observer observer) {
+observers.add(observer);
+}
+
+@Override
+public void removeObserver(Observer observer) {
+observers.remove(observer);
+}
+
+@Override
+public void notifyObserver() {
+for (Observer observer: this.observers) {
+observer.update(ChannelName + " ->"+this.status);
+}
+}
+}
+
+
+
+package Observer;
+
+public class Follower implements Observer{
+private String followerName;
+
+public Follower(String followerName) {
+this.followerName = followerName;
+}
+
+@Override
+public void update(String status) {
+System.out.println( followerName + " " + status);
+}
+public void play(){
+System.out.println("play")
+}
+}
